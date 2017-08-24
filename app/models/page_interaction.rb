@@ -28,7 +28,4 @@ class PageInteraction
     @client.set_up(ll: nil)
   end
 
-  # def first_post
-  #   self.posts[0]["data"]["title"]
-  # end
 end

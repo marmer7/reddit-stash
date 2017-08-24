@@ -31,7 +31,7 @@ class Cli
     print Rainbow(score).color(:green)
     print buffer
     if title.size > 64
-      puts Rainbow(title.slice(0...64)).bright.underline
+      puts Rainbow(title.slice(0..63)).bright.underline
       puts align + Rainbow(title.slice(64..127)).bright.underline
     else
       puts Rainbow(title).bright.underline
