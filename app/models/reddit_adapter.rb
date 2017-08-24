@@ -3,10 +3,11 @@ require 'rest-client'
 
 class RedditAdapter
 
-  attr_accessor :link, :current_subreddit, :page, :count
+  attr_accessor :request, :link, :current_subreddit, :page, :count, :last_link
 
   def request
     # reddit hash from JSON
+    puts @link
     @request = JSON.parse(RestClient.get(self.link))
   end
 
@@ -16,63 +17,21 @@ class RedditAdapter
     self.set_up
   end
 
-  def set_up
-    binding.pry
+  def set_up(ll: nil)
     @count = @page * 25
-    @link = "https://www.reddit.com/r/#{current_subreddit}/.json?count=#{count}"
+    @last_link = ll
+    @link = "https://www.reddit.com/r/#{@current_subreddit}/.json?count=#{@count}#{@last_link}"
     self.request
   end
 
-  def next_page
-    @page += 1
-    self.set_up
+  def children
+    @request["data"]["children"]
   end
 
-  def last_page
-    @page -= 1
-    self.set_up
+  def last_link
+    last_index = self.children.size - 1
+    name = self.children[last_index]["data"]["name"]
+    @last_link = "&after=#{name}"
   end
-
-  def change_subreddit(subreddit)
-    @current_subreddit = subreddit
-    self.set_up
-  end
-
-  def posts
-    self.request["data"]["children"]
-  end
-
-  # title request["data"]["children"][0]["data"]["title"]
-
+  
 end
-
-# class ApiAdapter
-#   attr_accessor :link
-#   CHARACTERS = []
-#
-#   def initialize(link = 'http://www.swapi.co/api/people/')
-#     @link = link
-#     self.page_loop
-#   end
-#
-#   def link_valid?
-#     !self.link.nil?
-#   end
-#
-#   def request
-#     @request = JSON.parse(RestClient.get(self.link))
-#   end
-#
-#   def page_loop
-#     while self.link_valid?
-#       CHARACTERS << self.request['results']
-#       self.link = request["next"]
-#       puts self.link
-#     end
-#   end
-#
-#   def character_array
-#     CHARACTERS.flatten
-#   end
-#
-# end
