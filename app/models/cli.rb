@@ -22,6 +22,7 @@ class Cli
     align = " "*12
     buffer = " "*(12 - (index.to_s.size + score.to_s.size))
     title = post_hash[:title]
+    subreddit = post_hash[:subreddit]
     # post_hint = post_hash[:post_hint]
     # created_utc = post_hash[:created_utc]
     # post_time = t_hour - Time(created_utc).hour
@@ -35,12 +36,14 @@ class Cli
     else
       puts Rainbow(title).bright.underline
     end
+    puts align + Rainbow(subreddit).bright.magenta
   end
 
   def footer
-    puts Rainbow("<- previous page (p)" + (" "*37) + "next page (n) -->").background(:white).color(:black)
-    puts Rainbow((" "*16)+"Change to different subreddit(c)"+(" "*16)).background(:white).color(:black)
-    puts Rainbow("  ENTER SINGLE OR MULTIPLE NUMBERS SEPARATED BY COMMAS TO OPEN  ").background(:white).color(:black)
+    align = " "*12
+    puts align+Rainbow("<- previous page (p)" + (" "*27) + "next page (n) -->").background(:white).color(:black)
+    puts align+Rainbow((" "*16)+"Change to different subreddit(c)"+(" "*16)).background(:white).color(:black)
+    puts align+Rainbow("  ENTER SINGLE OR MULTIPLE NUMBERS SEPARATED BY COMMAS TO OPEN  ").background(:white).color(:black)
   end
 
   def print_all_posts

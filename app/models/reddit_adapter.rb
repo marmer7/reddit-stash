@@ -7,13 +7,13 @@ class RedditAdapter
 
   def request
     # reddit hash from JSON
-    puts @link
     @request = JSON.parse(RestClient.get(self.link))
   end
 
-  def initialize(page = 0, subreddit = "all")
-    @page = page
-    @current_subreddit = subreddit
+  def initialize
+    # initializes on the front page of r/all
+    @page = 0
+    @current_subreddit = "all"
     self.set_up
   end
 
@@ -33,5 +33,5 @@ class RedditAdapter
     name = self.children[last_index]["data"]["name"]
     @last_link = "&after=#{name}"
   end
-  
+
 end

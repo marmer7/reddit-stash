@@ -10,10 +10,6 @@ class PageInteraction
     @client.children
   end
 
-  def first_post
-    self.posts[0]["data"]["title"]
-  end
-
   def next_page
     @client.page += 1
     @client.set_up(ll: self.client.last_link)
@@ -32,4 +28,7 @@ class PageInteraction
     @client.set_up(ll: nil)
   end
 
+  # def first_post
+  #   self.posts[0]["data"]["title"]
+  # end
 end
